@@ -1,121 +1,79 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
+import ModuleStudy from './pages/ModuleStudy'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [view, setView] = useState('home')
+  const [selectedModule, setSelectedModule] = useState(null)
+
+  const modules = [
+    { id: 1, name: 'Módulo 1' },
+    { id: 2, name: 'Módulo 2' },
+    { id: 3, name: 'Módulo 3' },
+    { id: 4, name: 'Módulo 4' },
+    { id: 5, name: 'Módulo 5' },
+    { id: 6, name: 'Módulo 6' }
+  ]
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+    <div className="app">
+      <h1>Desarrollo Seguro</h1>
 
-      <div className="ticks"></div>
+      {view === 'home' && (
+        <>
+          <div className="menu">
+            <button onClick={() => setView('modules')}>
+              📚 Estudiar por módulo
+            </button>
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+            <button>
+              📝 Precertificación
+            </button>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+            <button>
+              🎯 Certificación
+            </button>
+
+            <button>
+              🔥 Arquitecto Senior
+            </button>
+
+            <button>
+              📊 Estadísticas
+            </button>
+          </div>
+        </>
+      )}
+
+      {view === "modules" && !selectedModule && (
+        <>
+          <button onClick={() => setView("home")}>
+            ← Regresar
+          </button>
+
+          <h2>Selecciona un módulo</h2>
+
+          <div className="modules">
+            {modules.map((module) => (
+              <button
+                key={module.id}
+                onClick={() =>
+                  setSelectedModule(module.id)
+                }
+              >
+                {module.name}
+              </button>
+            ))}
+          </div>
+        </>
+      )}
+      {selectedModule && (
+        <ModuleStudy
+          moduleId={selectedModule}
+          onBack={() => setSelectedModule(null)}
+        />
+      )}
+    </div>
   )
 }
 

@@ -1,0 +1,61 @@
+{
+  "module": 1,
+  "title": "Conceptos de Software Seguro",
+  "questions": [
+    {
+      "id": "M1-C-001",
+      "module": 1,
+      "domain": "Principios de Seguridad",
+      "subcategory": "Separación de Funciones",
+      "concept": "Separation of Duties",
+      "bank": "C",
+      "difficulty": "hard",
+      "type": "bad-practice",
+      "question": "Una aplicación bancaria fue desarrollada permitiendo que los analistas financieros creen, aprueben y ejecuten pagos utilizando la misma cuenta.",
+      "options": [
+        "Defensa en profundidad",
+        "Mínimo privilegio",
+        "Separación de funciones",
+        "Diseño abierto"
+      ],
+      "correctAnswer": 2,
+      "explanation": "La separación de funciones evita que una sola persona controle completamente procesos críticos.",
+      "concepts": [
+        "Separation of Duties"
+      ],
+      "tags": [
+        "sod",
+        "principios"
+      ],
+      "examWeight": 5,
+      "estimatedSeconds": 90,
+      "examRelevant": true,
+      "source": "Banco C",
+      "active": true
+    },
+    {
+      "id": "M1-C-002",
+      "question": "Una organización implementa firewall, IDS, segmentación de red y WAF para proteger una aplicación crítica. ¿Qué principio de seguridad representa mejor esta estrategia?",
+      "options": [
+        "Fail Safe",
+        "Defensa en profundidad",
+        "Diseño abierto",
+        "Separación de funciones"
+      ],
+      "correctAnswer": 1,
+      "explanation": "La defensa en profundidad utiliza múltiples capas de protección para reducir el riesgo."
+    },
+    {
+      "id": "M1-C-003",
+      "question": "Una organización implementa firewall, IDS, segmentación de red y WAF para proteger una aplicación crítica. ¿Qué principio de seguridad representa mejor esta estrategia?",
+      "options": [
+        "Fail Safe",
+        "Defensa en profundidad",
+        "Diseño abierto",
+        "Separación de funciones"
+      ],
+      "correctAnswer": 1,
+      "explanation": "La defensa en profundidad utiliza múltiples capas de protección para reducir el riesgo."
+    }
+  ]
+}
