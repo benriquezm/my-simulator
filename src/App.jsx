@@ -1,10 +1,33 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import ModuleStudy from './pages/ModuleStudy'
 import './App.css'
 
 function App() {
-  const [view, setView] = useState('home')
-  const [selectedModule, setSelectedModule] = useState(null)
+  const [view, setView] = useState(
+    localStorage.getItem("view") || "home"
+  )
+
+  const [selectedModule, setSelectedModule] =
+    useState(
+      Number(
+        localStorage.getItem(
+          "selectedModule"
+        )
+      ) || null
+    )
+  
+  useEffect(() => {
+    localStorage.setItem("view", view);
+  }, [view]);
+
+  useEffect(() => {
+    if (selectedModule) {
+      localStorage.setItem(
+        "selectedModule",
+        selectedModule
+      );
+    }
+  }, [selectedModule]);
 
   const modules = [
     { id: 1, name: 'Módulo 1' },

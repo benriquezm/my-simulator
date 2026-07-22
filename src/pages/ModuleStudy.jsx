@@ -1,14 +1,37 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import QuestionCard from "../components/QuestionCard";
 import modulo1 from "../data/modulo1.json";
+import modulo2 from "../data/modulo2.json";
+import modulo3 from "../data/modulo3.json";
+import modulo4 from "../data/modulo4.json";
+import modulo5 from "../data/modulo5.json";
+import modulo6 from "../data/modulo6.json";
 
 function ModuleStudy({ moduleId, onBack }) {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [isAnswered, setIsAnswered] =  useState(false);
   const [questionStatus, setQuestionStatus] = useState({});
+  const [difficultyFilter, setDifficultyFilter] =
+  useState(
+    localStorage.getItem(
+      "difficultyFilter"
+    ) || "all"
+  );
+
+  useEffect(() => {
+    localStorage.setItem(
+      "difficultyFilter",
+      difficultyFilter
+    );
+  }, [difficultyFilter]);
 
   const modules = {
     1: modulo1,
+    2: modulo2,
+    3: modulo3,
+    4: modulo4,
+    5: modulo5,
+    6: modulo6
   };
 
   const selectedModule = modules[moduleId];
@@ -25,13 +48,39 @@ function ModuleStudy({ moduleId, onBack }) {
     );
   }
 
+  const filteredQuestions =
+  difficultyFilter === "all"
+    ? selectedModule.questions
+    : selectedModule.questions.filter(
+        (question) =>
+          question.difficulty ===
+          difficultyFilter
+      );
+
+  if (filteredQuestions.length === 0) {
+    return (
+      <>
+        <button onClick={onBack}>
+          ← Regresar
+        </button>
+
+        <h2>{selectedModule.title}</h2>
+
+        <p>
+          No existen preguntas para esta
+          dificultad.
+        </p>
+      </>
+    );
+  }
+
   const currentQuestion =
-    selectedModule.questions[currentQuestionIndex];
+  filteredQuestions[currentQuestionIndex];
 
   const nextQuestion = () => {
     if (
         currentQuestionIndex <
-        selectedModule.questions.length - 1
+        filteredQuestions.length - 1
     ) {
         setCurrentQuestionIndex(
         currentQuestionIndex + 1
@@ -57,9 +106,108 @@ function ModuleStudy({ moduleId, onBack }) {
 
       <h2>{selectedModule.title}</h2>
 
+      <p
+        style={{
+          textAlign: "center",
+          marginBottom: "1rem",
+          fontWeight: "bold"
+        }}
+      >
+        Dificultad actual:{" "}
+        {difficultyFilter === "all"
+          ? "Todas"
+          : difficultyFilter === "easy"
+          ? "Fácil"
+          : difficultyFilter === "medium"
+          ? "Media"
+          : difficultyFilter === "hard"
+          ? "Difícil"
+          : "Experto"}
+      </p>
+
+      <div
+        style={{
+          display: "flex",
+          gap: "0.5rem",
+          justifyContent: "center",
+          marginBottom: "1rem",
+          flexWrap: "wrap"
+        }}
+      >
+        <button
+          className={`filter-btn ${
+            difficultyFilter === "all"
+              ? "active"
+              : ""
+          }`}
+          onClick={() => {
+            setDifficultyFilter("all");
+            setCurrentQuestionIndex(0);
+          }}
+        >
+          Todas
+        </button>
+
+        <button
+          className={`filter-btn ${
+            difficultyFilter === "easy"
+              ? "active"
+              : ""
+          }`}
+          onClick={() => {
+            setDifficultyFilter("easy");
+            setCurrentQuestionIndex(0);
+          }}
+        >
+          Fácil
+        </button>
+
+        <button
+          className={`filter-btn ${
+            difficultyFilter === "medium"
+              ? "active"
+              : ""
+          }`}
+          onClick={() => {
+            setDifficultyFilter("medium");
+            setCurrentQuestionIndex(0);
+          }}
+        >
+          Media
+        </button>
+
+        <button
+          className={`filter-btn ${
+            difficultyFilter === "hard"
+              ? "active"
+              : ""
+          }`}
+          onClick={() => {
+            setDifficultyFilter("hard");
+            setCurrentQuestionIndex(0);
+          }}
+        >
+          Difícil
+        </button>
+
+        <button
+          className={`filter-btn ${
+            difficultyFilter === "expert"
+              ? "active"
+              : ""
+          }`}
+          onClick={() => {
+            setDifficultyFilter("expert");
+            setCurrentQuestionIndex(0);
+          }}
+        >
+          Experto
+        </button>
+      </div>
+
       <h3>
         Pregunta {currentQuestionIndex + 1} de{" "}
-        {selectedModule.questions.length}
+        {filteredQuestions.length}
       </h3>
 
       <div
@@ -96,7 +244,7 @@ function ModuleStudy({ moduleId, onBack }) {
           <h4>Preguntas</h4>
 
           <div className="question-grid">
-            {selectedModule.questions.map(
+            {filteredQuestions.map(
               (question, index) => (
                 <button
                   key={question.id}
@@ -141,7 +289,7 @@ function ModuleStudy({ moduleId, onBack }) {
             disabled={
                 !isAnswered ||
                 currentQuestionIndex ===
-                selectedModule.questions.length - 1
+                filteredQuestions.length - 1
             }
             >
             Siguiente →

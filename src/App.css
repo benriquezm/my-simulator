@@ -101,6 +101,22 @@ button:disabled:hover {
   margin-top: 2rem;
 }
 
+.filter-container {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.filter-btn {
+  min-width: 100px;
+}
+
+.filter-btn.active {
+  background-color: #2e7d32 !important;
+}
+
 @media (max-width: 768px) {
   .study-layout {
     grid-template-columns: 1fr;
