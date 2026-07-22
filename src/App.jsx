@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import ModuleStudy from './pages/ModuleStudy'
+import PreCertification from "./pages/PreCertification";
 import './App.css'
 
 function App() {
@@ -42,14 +43,18 @@ function App() {
     <div className="app">
       <h1>Desarrollo Seguro</h1>
 
-      {view === 'home' && (
+      {view === 'home' && !selectedModule && (
         <>
           <div className="menu">
             <button onClick={() => setView('modules')}>
               📚 Estudiar por módulo
             </button>
 
-            <button>
+            <button
+              onClick={() =>
+                setView("precertification")
+              }
+            >
               📝 Precertificación
             </button>
 
@@ -89,6 +94,13 @@ function App() {
             ))}
           </div>
         </>
+      )}
+      {view === "precertification" && (
+        <PreCertification
+          onBack={() =>
+            setView("home")
+          }
+        />
       )}
       {selectedModule && (
         <ModuleStudy
