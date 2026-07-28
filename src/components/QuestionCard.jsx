@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function QuestionCard({ question, onAnswered }) {
+function QuestionCard({ question, onAnswered, showFeedback = true }) {
   const [selected, setSelected] = useState(null);
   const [answered, setAnswered] = useState(false);
 
@@ -11,7 +11,8 @@ function QuestionCard({ question, onAnswered }) {
 
     if (onAnswered) {
       onAnswered(
-        selected === question.correctAnswer
+        selected === question.correctAnswer,
+        selected
       );
     }
   };
@@ -41,7 +42,7 @@ function QuestionCard({ question, onAnswered }) {
         </button>
       )}
 
-      {answered && (
+      {answered && showFeedback && (
         <>
           <h4>
             {selected === question.correctAnswer

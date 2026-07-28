@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import ModuleStudy from './pages/ModuleStudy'
 import PreCertification from "./pages/PreCertification";
+import Certification from "./pages/Certification";
 import './App.css'
 
 function App() {
@@ -58,7 +59,11 @@ function App() {
               📝 Precertificación
             </button>
 
-            <button>
+            <button
+              onClick={() =>
+                setView("certification")
+              }
+            >
               🎯 Certificación
             </button>
 
@@ -97,6 +102,13 @@ function App() {
       )}
       {view === "precertification" && (
         <PreCertification
+          onBack={() =>
+            setView("home")
+          }
+        />
+      )}
+      {view === "certification" && (
+        <Certification
           onBack={() =>
             setView("home")
           }
